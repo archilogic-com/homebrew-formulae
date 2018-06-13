@@ -62,7 +62,7 @@ class BoostPythonAT165 < Formula
       open("user-config.jam", "w") do |file|
         # Force boost to compile with the desired compiler
         file.write "using darwin : : #{ENV.cxx} ;\n"
-        file.write <<-EOS.undent
+        file.write <<~EOS
           using python : #{version}
                        : #{python}
                        : #{py_include}
