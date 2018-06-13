@@ -12,8 +12,6 @@ class BoostPythonAT165 < Formula
     sha256 "1c7ed19d481568b5fb8aacff6541ba31d0a6d96bbfe0b1ca828a8a8bf129411d" => :yosemite
   end
 
-  keg_only :versioned_formula
-
   option :cxx11
   option "without-python@2", "Build without python 2 support"
 
