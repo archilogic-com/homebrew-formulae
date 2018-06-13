@@ -1,4 +1,4 @@
-class Boost < Formula
+class BoostAT165 < Formula
   desc "Collection of portable C++ source libraries"
   homepage "https://www.boost.org/"
   url "https://dl.bintray.com/boostorg/release/1.65.0/source/boost_1_65_0.tar.bz2"
