@@ -75,8 +75,8 @@ class BoostPythonAT165 < Formula
                      "python=#{version}", *args
     end
 
-    lib.install Dir["stage-python3/lib/*py*"] if build.with?("python3")
-    lib.install Dir["stage-python/lib/*py*"] if build.with?("python")
+    lib.install Dir["stage-python3/lib/*py*"] if build.with?("python")
+    lib.install Dir["stage-python2.7/lib/*py*"] if build.with?("python@2")
     doc.install Dir["libs/python/doc/*"]
   end
 
