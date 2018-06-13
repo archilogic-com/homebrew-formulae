@@ -1,4 +1,4 @@
-class BoostPython < Formula
+class BoostPythonAT165 < Formula
   desc "C++ library for C++/Python interoperability"
   homepage "https://www.boost.org/"
   url "https://dl.bintray.com/boostorg/release/1.65.0/source/boost_1_65_0.tar.bz2"
@@ -15,7 +15,7 @@ class BoostPython < Formula
   option :cxx11
   option "without-python", "Build without python 2 support"
 
-  depends_on :python3 => :optional
+  depends_on "python" => :optional
   depends_on "boost"
 
   def install
