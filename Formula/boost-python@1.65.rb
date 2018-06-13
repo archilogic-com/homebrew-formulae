@@ -12,11 +12,22 @@ class BoostPythonAT165 < Formula
     sha256 "1c7ed19d481568b5fb8aacff6541ba31d0a6d96bbfe0b1ca828a8a8bf129411d" => :yosemite
   end
 
-  option :cxx11
-  option "without-python", "Build without python 2 support"
+  keg_only :versioned_formula
 
+  option :cxx11
+  option "without-python@2", "Build without python 2 support"
+
+  deprecated_option "with-python3" => "with-python"
+  deprecated_option "without-python" => "without-python@2"
+
+  depends_on "python@2" => :recommended
   depends_on "python" => :optional
-  depends_on "boost"
+
+  if build.cxx11?
+    depends_on "boost@1.65" => "c++11"
+  else
+    depends_on "boost@1.65"
+  end
 
   def install
     # "layout" should be synchronized with boost
@@ -38,7 +49,7 @@ class BoostPythonAT165 < Formula
         args << "cxxflags=-stdlib=libc++" << "linkflags=-stdlib=libc++"
       end
     elsif Tab.for_name("boost").cxx11?
-      odie "boost was built in C++11 mode so boost-python must be built with --c++11."
+      odie "boost165 was built in C++11 mode so boost-python165 must be built with --c++11."
     end
 
     # disable python detection in bootstrap.sh; it guesses the wrong include directory
@@ -83,9 +94,11 @@ class BoostPythonAT165 < Formula
       }
     EOS
     Language::Python.each_python(build) do |python, _|
-      pyflags = (`#{python}-config --includes`.strip + " " +
-                 `#{python}-config --ldflags`.strip).split(" ")
-      system ENV.cxx, "-shared", "hello.cpp", "-L#{lib}", "-lboost_#{python}", "-o", "hello.so", *pyflags
+      boost_python = (python == "python3") ? "boost_python3" : "boost_python"
+      pyflags = `#{python}-config --includes`.strip.split(" ") +
+                `#{python}-config --ldflags`.strip.split(" ")
+      system ENV.cxx, "-shared", "hello.cpp", "-I#{Formula["boost165"].opt_include}",
+                      "-L#{lib}", "-l#{boost_python}", "-o", "hello.so", *pyflags
       output = `#{python} -c "from __future__ import print_function; import hello; print(hello.greet())"`
       assert_match "Hello, world!", output
     end
