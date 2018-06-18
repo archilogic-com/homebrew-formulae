@@ -18,13 +18,13 @@ class BoostPythonAT165 < Formula
   deprecated_option "with-python3" => "with-python"
   deprecated_option "without-python" => "without-python@2"
 
-  # depends_on "python@2" => :recommended
-  # depends_on "python" => :optional
+  depends_on "python@2" => :recommended
+  depends_on "python" => :optional
 
   if build.cxx11?
-    depends_on "boost@1.65" => "c++11"
+    depends_on "archilogic-com/homebrew-formulae/boost@1.65" => "c++11"
   else
-    depends_on "boost@1.65"
+    depends_on "archilogic-com/homebrew-formulae/boost@1.65"
   end
 
   def install
