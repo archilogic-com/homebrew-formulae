@@ -57,8 +57,8 @@ class BoostPythonAT165 < Formula
     Language::Python.each_python(build) do |python, version|
       py_prefix = `#{python} -c "from __future__ import print_function; import sys; print(sys.prefix)"`.strip
       py_include = `#{python} -c "from __future__ import print_function; import distutils.sysconfig; print(distutils.sysconfig.get_python_inc(True))"`.strip
-      print "Python prefix: " + py_prefix
-      print "Python include: " + py_include
+      print "Python prefix: " + py_prefix + "\n"
+      print "Python include: " + py_include + "\n"
       open("user-config.jam", "w") do |file|
         # Force boost to compile with the desired compiler
         file.write "using darwin : : #{ENV.cxx} ;\n"
