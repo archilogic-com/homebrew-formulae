@@ -55,6 +55,7 @@ class BoostPythonAT165 < Formula
     inreplace "bootstrap.sh", "using python", "#using python"
 
     Language::Python.each_python(build) do |python, version|
+      print "Using #{python}\n"
       py_prefix = `#{python} -c "from __future__ import print_function; import sys; print(sys.prefix)"`.strip
       py_include = `#{python} -c "from __future__ import print_function; import distutils.sysconfig; print(distutils.sysconfig.get_python_inc(True))"`.strip
       print "Python prefix: " + py_prefix + "\n"
