@@ -12,7 +12,10 @@ class BoostPython3AT167 < Formula
   end
 
   depends_on "archilogic-com/homebrew-formulae/boost@1.67"
-  depends_on "python"
+  # If this is enabled, it will automatically upgrade to python 3.7 which is undesirable.
+  # Make sure to have python3.6 install with homebrew. Example command to install python3.6 with homebrew:
+  # brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/f2a764ef944b1080be64bd88dca9a1d80130c558/Formula/python.rb
+  #depends_on "python"
 
   needs :cxx11
 
