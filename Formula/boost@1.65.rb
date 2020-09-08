@@ -15,13 +15,11 @@ class BoostAT165 < Formula
   option "with-icu4c", "Build regexp engine with icu support"
   option "without-single", "Disable building single-threading variant"
   option "without-static", "Disable building static library variant"
-  option :cxx11
 
   deprecated_option "with-icu" => "with-icu4c"
 
   depends_on "icu4c" => :optional
 
-  needs :cxx11 if build.cxx11?
 
   def install
     # Force boost to compile with the desired compiler
@@ -72,11 +70,9 @@ class BoostAT165 < Formula
 
     # Trunk starts using "clang++ -x c" to select C compiler which breaks C++11
     # handling using ENV.cxx11. Using "cxxflags" and "linkflags" still works.
-    if build.cxx11?
-      args << "cxxflags=-std=c++11"
-      if ENV.compiler == :clang
-        args << "cxxflags=-stdlib=libc++" << "linkflags=-stdlib=libc++"
-      end
+    args << "cxxflags=-std=c++11"
+    if ENV.compiler == :clang
+      args << "cxxflags=-stdlib=libc++" << "linkflags=-stdlib=libc++"
     end
 
     system "./bootstrap.sh", *bootstrap_args

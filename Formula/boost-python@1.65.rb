@@ -12,7 +12,6 @@ class BoostPythonAT165 < Formula
     sha256 "1c7ed19d481568b5fb8aacff6541ba31d0a6d96bbfe0b1ca828a8a8bf129411d" => :yosemite
   end
 
-  option :cxx11
   option "without-python@2", "Build without python 2 support"
 
   deprecated_option "with-python3" => "with-python"
@@ -21,11 +20,7 @@ class BoostPythonAT165 < Formula
   depends_on "python@2" => :recommended
   depends_on "python" => :optional
 
-  if build.cxx11?
-    depends_on "archilogic-com/homebrew-formulae/boost@1.65" => "c++11"
-  else
-    depends_on "archilogic-com/homebrew-formulae/boost@1.65"
-  end
+  depends_on "archilogic-com/homebrew-formulae/boost@1.65"
 
   def install
     # "layout" should be synchronized with boost
@@ -41,14 +36,10 @@ class BoostPythonAT165 < Formula
     # Build in C++11 mode if boost was built in C++11 mode.
     # Trunk starts using "clang++ -x c" to select C compiler which breaks C++11
     # handling using ENV.cxx11. Using "cxxflags" and "linkflags" still works.
-    if build.cxx11?
       args << "cxxflags=-std=c++11"
       if ENV.compiler == :clang
         args << "cxxflags=-stdlib=libc++" << "linkflags=-stdlib=libc++"
       end
-    elsif Tab.for_name("boost").cxx11?
-      odie "boost165 was built in C++11 mode so boost-python165 must be built with --c++11."
-    end
 
     # disable python detection in bootstrap.sh; it guesses the wrong include directory
     # for Python 3 headers, so we configure python manually in user-config.jam below.
